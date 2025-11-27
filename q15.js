@@ -5,13 +5,11 @@ const rl = readline.createInterface({
 });
 rl.question("Enter a number of seconds to count down: ", (answer) => {
   let timeLeft = Number(answer);
-
-  console.log(`\ncountdown starts : ${timeLeft} seconds...`);
-  console.log(`Press "s" to stop the countdown.\n`);
+  console.log(`\nStarting countdown from ${timeLeft} seconds...`);
+  console.log(`Press "s" at any time to stop the countdown.\n`);
   const countdown = setInterval(() => {
     console.log(`Time left: ${timeLeft}s`);
     timeLeft--;
-
     if (timeLeft < 0) {
       clearInterval(countdown);
       console.log("Countdown Complete!");
@@ -29,5 +27,3 @@ rl.question("Enter a number of seconds to count down: ", (answer) => {
     }, 200);
   });
 });
-
- 
