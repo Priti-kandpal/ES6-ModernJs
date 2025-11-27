@@ -1,3 +1,6 @@
-const calculate = num => ({ square: num * num, cube: num * num * num });
-console.log(calculate(5)); 
+console.log("Message 1");
 
+setTimeout(() => {
+    console.log("Message 2 after 2 seconds");
+}, 2000);
+console.log("Message 3");

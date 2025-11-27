@@ -1,13 +1,12 @@
-const profile = {
-  name: "Charlie",
-  age: 29,
-  address: { city: "San Francisco", zipcode: "94101" }
-};
+console.log("Begin");
+setTimeout(() => {
+  console.log("Timeout Task");
+}, 0);
 
-const updates = {
-  age: 30,
-  address: { zipcode: "94109", country: "USA" }
-};
+Promise.resolve().then(() => {
+  console.log("Promise Task");
+});
 
-const mergedObj = {...profile,...updates,address: {...profile.address, ...updates.address}};
-console.log(mergedObj);
+console.log("End");
+//indentation issue in the previous code
+//synchronous code runs first ,thatswhy begin and end execute immediately, line by line.while promise task and timeouttask executed afterwards
