@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h2>Change Div Background & Update Text</h2>
+    <input id="colorInput" type="text" placeholder="Enter a color (red, blue, green...)">
+
+    <input id="textInput" type="text" placeholder="Enter new text">
+
+    <button id="bgBtn">Change Background</button>
+    <button id="textBtn">Update Text</button>
+
+    <div id="myBox" style="width: 200px; height: 100px; margin-top: 20px; padding: 10px; background: lightgray;">
+        This is some initial text.
+    </div>
+
+    <script>
+        const colorInput = document.getElementById("colorInput");
+        const textInput = document.getElementById("textInput");
+        const box = document.getElementById("myBox");
+
+        const bgButton = document.getElementById("bgBtn");
+        const textButton = document.getElementById("textBtn");
+
+        bgButton.addEventListener("click", function () {
+            const color = colorInput.value;
+
+            box.style.backgroundColor = color;
+
+            if (box.style.backgroundColor === "") {
+                alert("Invalid color name!");
+            }
+        });
+
+        textButton.addEventListener("click", function () {
+            const newText = textInput.value;
+
+            if (newText.trim() === "") {
+                alert("Please enter some text!");
+            } else {
+                box.textContent = newText;
+            }
+        });
+    </script>
+
+</body>
+</html>

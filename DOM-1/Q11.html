@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1 id="title">hello</h1>
+
+    <p>mu name is preeti.</p>
+    <p>I'm learning web development.</p>
+
+    <div class="container">
+        This is a container div.
+    </div>
+    <script>
+        const heading = document.getElementById("title");
+        heading.textContent = "Welcome to the DOM World!";
+
+        const paragraphs = document.getElementsByTagName("p");
+        for (let i = 0; i < paragraphs.length; i++) {
+            paragraphs[i].style.color = "blue";
+        }
+        const containerDiv = document.querySelector(".container");
+        containerDiv.style.backgroundColor = "yellow";
+    </script>
+
+</body>
+</html>
