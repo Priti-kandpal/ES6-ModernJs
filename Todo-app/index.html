@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-App</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    #todos {
+      max-width: 500px;
+      margin: 20px auto;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .todo-item {
+      padding: 10px;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    button {
+      padding: 5px 8px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .completeBtn {
+      background: #28a745;
+      color: white;
+    }
+
+    .deleteBtn {
+      background: #dc3545;
+      color: white;
+    }
+
+    #msg {
+      text-align: center;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Todo List</h2>
+
+  <div id="todos"></div>
+  <p id="msg" style="display:none;">No Todos Available</p>
+
+
+<script>
+  const KEY = "todos20";
+
+  async function loadTodos() {
+    if (!localStorage.getItem(KEY)) {
+      let res = await fetch("https://jsonplaceholder.typicode.com/todos");
+      let data = await res.json();
+
+      // Sort alphabetically for cleaner UI
+      let first20 = data.slice(0, 20).sort((a, b) => a.title.localeCompare(b.title));
+
+      localStorage.setItem(KEY, JSON.stringify(first20));
+    }
+    render();
+  }
+
+  function getTodos() {
+    return JSON.parse(localStorage.getItem(KEY)) || [];
+  }
+
+  function saveTodos(arr) {
+    localStorage.setItem(KEY, JSON.stringify(arr));
+  }
+
+  function markComplete(id) {
+    let todos = getTodos();
+    todos = todos.map(t => t.id === id ? { ...t, completed: true } : t);
+    saveTodos(todos);
+    render();
+  }
+
+  function deleteTodo(id) {
+    let todos = getTodos().filter(t => t.id !== id);
+    saveTodos(todos);
+    render();
+  }
+
+  function render() {
+    const box = document.getElementById("todos");
+    const msg = document.getElementById("msg");
+    const todos = getTodos();
+
+    box.innerHTML = "";
+
+    if (todos.length === 0) {
+      msg.style.display = "block";
+      return;
+    }
+
+    msg.style.display = "none";
+
+    todos.forEach(t => {
+      let div = document.createElement("div");
+      div.className = "todo-item";
+
+      div.innerHTML = `
+        <span class="${t.completed ? 'completed' : ''}">
+          ${t.title} - <b>${t.completed ? "Completed" : "Not Completed"}</b>
+        </span>
+
+        <button class="completeBtn" 
+          onclick="markComplete(${t.id})" 
+          ${t.completed ? "disabled" : ""}>
+          Complete
+        </button>
+
+        <button class="deleteBtn" onclick="deleteTodo(${t.id})">
+          Delete
+        </button>
+      `;
+
+      box.appendChild(div);
+    });
+  }
+
+  loadTodos();
+</script>
+
+</body>
+</html>
